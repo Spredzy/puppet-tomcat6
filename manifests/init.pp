@@ -29,6 +29,7 @@ class tomcat6  inherits tomcat6::params {
         path    => ["/usr/bin", "/bin"],
         require => Exec["wget http://jpackage.org/jpackage50.repo"],
 	      before  => Notify["start_installation"],
+        unless  => "rpm -qa | grep jpackage-utils-compat-el5-0.0.1-1";
       }
 
       #
