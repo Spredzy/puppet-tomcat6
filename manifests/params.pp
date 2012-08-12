@@ -40,9 +40,9 @@ class tomcat6::params {
       $catalina_home    = {'CATALINA_HOME'    => '/usr/share/tomcat6'}
       $jasper_home      = {'JASPER_HOME'      => '/usr/share/tomcat6'}
       $catalina_tmpdir  = {'CATALINA_TMPDIR'  => '/var/cache/tomcat6/temp'}
-      $security_manager = {'SECURITY_MANAGER' => false}
+      $security_manager = {'SECURITY_MANAGER' => 'false'}
       $shutdown_wait    = {'SHUTDOWN_WAIT'    => '30'}
-      $shutdown_verbose = {'SHUTDOWN_VERBOSE' => false}
+      $shutdown_verbose = {'SHUTDOWN_VERBOSE' => 'false'}
     }
     'Debian' : {
       $conf_file        = '/etc/default/tomcat6'
@@ -54,9 +54,9 @@ class tomcat6::params {
       $catalina_home    = {'CATALINA_HOME'    => '/usr/share/tomcat6'}
       $jasper_home      = {'JASPER_HOME'      => '/usr/share/tomcat6'}
       $catalina_tmpdir  = {'CATALINA_TMPDIR'  => '/var/cache/tomcat6/temp'}
-      $security_manager = {'SECURITY_MANAGER' => false}
+      $security_manager = {'SECURITY_MANAGER' => 'false'}
       $shutdown_wait    = {'SHUTDOWN_WAIT'    => '30'}
-      $shutdown_verbose = {'SHUTDOWN_VERBOSE' => false}
+      $shutdown_verbose = {'SHUTDOWN_VERBOSE' => 'false'}
     }
     default : {
       fail("Unsupported osfamily: ${::osfamily} operatingsystem: ${::operatingsystem}, module ${module_name} only support osfamily RedHat Debian")

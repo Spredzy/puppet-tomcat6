@@ -1,5 +1,5 @@
 name 'yguenane-tomcat6'
-version '0.0.2'
+version '0.0.3'
 summary 'A Tomcat6 puppet module that installs tomcat6 on EL/Debian platforms'
 description "This module aims to install tomcat6 on EL/Debian platforms using their respective package managers"
 license 'GPLv3'

@@ -70,6 +70,6 @@ class tomcat6 ($config_hash = {},) inherits tomcat6::params {
     enable      => true,
     hasrestart  => true,
     hasstatus   => true,
-    subscribe     => File[${conf_file}],
+    subscribe     => File[$conf_file],
   }
 }
