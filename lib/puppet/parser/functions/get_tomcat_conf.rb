@@ -6,12 +6,12 @@ module Puppet::Parser::Functions
 	  content = ''
 	  defaults.each do |hash|
 		hash.each do |key, value|
-			content += "\n" + key + '="' + value +'"' unless extras.has_key?(key)
+			content += key + '="' + value +'"' + "\n" unless extras.has_key?(key)
 		end 
 	  end
 
 	  extras.each do |key, value|
-			content += "\n" + key + '="' + value +'"'
+			content += key + '="' + value +'"' + "\n"
 	  end
 	  content
   end

@@ -1,4 +1,11 @@
 class tomcat6 ($config_hash = {},) inherits tomcat6::params {
+
+  Class['tomcat6'] -> Class['tomcat6::config']
+
+  class {'tomcat6::config' :
+	  config_hash => $config_hash,
+  }
+
   if $osfamily == "RedHat" {
 
     $yum_priorities = $lsbmajdistrelease ? {
@@ -41,35 +48,17 @@ class tomcat6 ($config_hash = {},) inherits tomcat6::params {
   }
 
   notify {'start_installation' : }
-  $default_params = [$tomcat6::params::tomcat_user,
-  $tomcat6::params::tomcat_group,
-  $tomcat6::params::java_opts,
-  $tomcat6::params::catalina_pid,
-  $tomcat6::params::catalina_base,
-  $tomcat6::params::catalina_home,
-  $tomcat6::params::jasper_home,
-  $tomcat6::params::catalina_tmpdir,
-  $tomcat6::params::security_manager,
-  $tomcat6::params::shutdown_wait,
-  $tomcat6::params::shutdown_verbose]
-  $conf_file_content = get_tomcat_conf($default_params, $config_hash)
 
   package {'tomcat6' :
-    ensure => installed,
+    ensure  => installed,
+	name    => 'tomcat6',
     require => Notify['start_installation'],
   }
 
-  file {$conf_file :
-    ensure	=> present,
-    content => $conf_file_content,
-    require	=> Package['tomcat6'],
+  service {'tomcat6' :
+    ensure     => running,
+    enable     => true,
+	require    => Package['tomcat6'],
   }
 
-  service {'tomcat6' :
-    ensure      => running,
-    enable      => true,
-    hasrestart  => true,
-    hasstatus   => true,
-    subscribe     => File[$conf_file],
-  }
 }
