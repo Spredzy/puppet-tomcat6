@@ -19,7 +19,6 @@ class tomcat6 ($config_hash = {},) inherits tomcat6::params {
 
   package {'tomcat6' :
     ensure  => installed,
-	name    => 'tomcat6',
     require => Notify['start_installation'],
   }
 

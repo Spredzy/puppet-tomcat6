@@ -16,17 +16,14 @@ class tomcat6::config ($config_hash = {}) inherits tomcat6::params {
   file {$conf_file :
   	ensure  => present,
   	content => $conf_file_content,
-	owner     => 'tomcat',
-	group     => 'tomcat',
-	mode      => '0755',
-	notify    => Exec['tomcat6-restart'],
+	notify  => Exec['tomcat6-restart'],
   }
 
   exec {'tomcat6-restart':
 	command     => "service tomcat6 restart",
 	refreshonly => true,
-	logoutput    => true,
-	path        => '/sbin/:/usr/sbin/:/usr/bin/:/bin/',
+	logoutput   => true,
+	path        => '/sbin',
   }
 
 }
