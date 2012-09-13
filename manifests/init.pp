@@ -1,5 +1,7 @@
 class tomcat6 ($config_hash = {},) inherits tomcat6::params {
 
+	Class['yum_priorities'] -> Class['epel'] -> Class['repoforge'] -> Class['jpackage'] -> Class['tomcat6']
+
   if $::osfamily == "RedHat" {
 	include yum_priorities, epel, repoforge, jpackage
 

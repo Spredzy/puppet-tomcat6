@@ -23,7 +23,10 @@ class tomcat6::config ($config_hash = {}) inherits tomcat6::params {
 	command     => "service tomcat6 restart",
 	refreshonly => true,
 	logoutput   => true,
-	path        => '/sbin',
+	path        => '/usr/sbin:/sbin:/usr/bin:/bin',
+	tries       => 4,
+	try_sleep   => 3,
+	onlyif      => "curl --silent --show-error -I http://localhost:8080 | grep 'Coyote'",
   }
 
 }
