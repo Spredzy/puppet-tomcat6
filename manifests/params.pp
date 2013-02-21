@@ -1,12 +1,5 @@
 class tomcat6::params {
 
-  #
-  # Tomcat6 configuration file parameters
-  #
-  # EL : /usr/share/tomcat6/conf/tomcat6.conf
-  #
-  # Debian : /etc/default/tomcat6
-  #
   case $::osfamily {
     'RedHat' : {
       $tomcat_user = 'tomcat'

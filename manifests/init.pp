@@ -5,7 +5,7 @@ class tomcat6 (
 
   include tomcat6::params
 
-  Package['tomcat6'] -> File[$tomcat6::params::tomcat_settings] -> Service['tomcat6']
+  Package['tomcat6'] -> File[$tomcat6::params::tomcat_settings] ~> Service['tomcat6']
 
   if $tomcat_user == '' {
     $tomcat_user_internal = $tomcat6::params::tomcat_user
