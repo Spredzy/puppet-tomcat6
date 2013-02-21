@@ -31,7 +31,7 @@ Simplest form
 If you have parameters you wan to specify
 
     class {'tomcat6':
-      java_opts => '',
+      java_opts => '-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC',
       lang => 'fr_FR',
       tomcat_user => my_tomcat_user',
     }
