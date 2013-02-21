@@ -1,38 +1,36 @@
-class tomcat6 ($config_hash = {},) inherits tomcat6::params {
+class tomcat6 (
+  $tomcat_user = '',
+  $java_opts = '-Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC',
+  $lang = 'en_US') {
 
-	Class['yum_priorities'] -> Class['epel'] -> Class['repoforge'] -> Class['jpackage'] -> Class['tomcat6']
+  include tomcat6::params
 
-  if $::osfamily == "RedHat" {
-	include yum_priorities, epel, repoforge, jpackage
+  Package['tomcat6'] -> File[$tomcat6::params::tomcat_settings] -> Service['tomcat6']
 
-    #
-    # The following two statement are there to correct an incorrect behvoir of CentOS 5 Series related to JPackage.
-    # TODO Check if this applies also for CentOS 6 Series
-    # Missing Dependency: /usr/bin/rebuild-security-providers is needed by package java-1.4.2-gcj-compat-1.4.2.0-40jpp.115.i386 (base)
-    #
-    exec {'rpm -Uvh http://plone.lucidsolutions.co.nz/linux/centos/images/jpackage-utils-compat-el5-0.0.1-1.noarch.rpm' :
-      path    => '/bin',
-      before  => Notify['start_installation'],
-      unless  => 'rpm -q jpackage-utils-compat-el5-0.0.1-1.noarch';
-    }
+  if $tomcat_user == '' {
+    $tomcat_user_internal = $tomcat6::params::tomcat_user
+  } else {
+    $tomcat_user_internal = $tomcat_user
   }
 
-  notify {'start_installation' : }
+  if $::osfamily == 'RedHat' {
+    require jpackage
+  }
 
   package {'tomcat6' :
-    ensure  => installed,
-    require => Notify['start_installation'],
+    ensure => installed,
+  }
+
+  file {$tomcat6::params::tomcat_settings :
+    ensure  => present,
+    content => template('tomcat6/tomcat6.erb'),
   }
 
   service {'tomcat6' :
-    ensure  => running,
-    enable  => true,
-	require => Package['tomcat6'],
-  }
-
-  class {'tomcat6::config' :
-	  config_hash => $config_hash,
-	  require     => Service['tomcat6'],
+    ensure     => running,
+    enable     => true,
+    hasrestart => true,
+    hasstatus  => true,
   }
 
 }
