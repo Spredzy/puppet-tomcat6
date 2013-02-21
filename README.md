@@ -1,5 +1,5 @@
-puppet-tomcat6
-==============
+# puppet-tomcat6 [![Build Status](https://travis-ci.org/Spredzy/puppet-tomcat6.png)](https://travis-ci.org/Spredzy/puppet-tomcat6)
+
 
 A puppet module that installs the Tomcat Java Servlet Container
 
