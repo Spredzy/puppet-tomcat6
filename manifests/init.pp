@@ -5,8 +5,6 @@ class tomcat6 (
 
   include tomcat6::params
 
-  Package['tomcat6'] -> File[$tomcat6::params::tomcat_settings] ~> Service['tomcat6']
-
   if $tomcat_user == '' {
     $tomcat_user_internal = $tomcat6::params::tomcat_user
   } else {
@@ -14,18 +12,16 @@ class tomcat6 (
   }
 
   if $::osfamily == 'RedHat' {
-    require jpackage
+    require epel
   }
 
   package {'tomcat6' :
     ensure => installed,
-  }
-
+  } ->
   file {$tomcat6::params::tomcat_settings :
     ensure  => present,
     content => template('tomcat6/tomcat6.erb'),
-  }
-
+  } ->
   service {'tomcat6' :
     ensure     => running,
     enable     => true,

@@ -1,0 +1,5 @@
+fixtures:
+  repositories:
+    epel: "git://github.com/stahnma/puppet-module-epel"
+  symlinks:
+    tomcat6: "#{source_dir}"
