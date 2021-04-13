@@ -1,6 +1,6 @@
 source :rubygems
 
-gem 'puppet', '~> 2.7'
+gem 'puppet', '~> 6.13'
 
 group :test do
   gem 'rake'
